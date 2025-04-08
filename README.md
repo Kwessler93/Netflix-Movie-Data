@@ -13,7 +13,7 @@ The project is part of the **Data Visualization Track** and focuses on user-driv
 - **PostgreSQL**: To store cleaned and merged data  
 - **PyTrends**: For retrieving Google search trends on Netflix content  
 - **OMDb API**: To fetch IMDb ratings and additional metadata  
-- **SQLAlchemy & Pandas**: For database interaction and data wrangling  
+- **JavaScript and HTML**: For database interaction and visual display  
 
 ---
 
