@@ -28,22 +28,24 @@ The project is part of the **Data Visualization Track** and focuses on user-driv
 
 ### 🔄 ETL Pipeline
 We’ll build a custom ETL pipeline to:
-1. **Extract** Netflix show data, OMDb rating info, and search interest via PyTrends  
+1. **Extract** Netflix movie data, OMDb rating info, and search interest via PyTrends  
 2. **Transform** the datasets (clean, normalize, and join by title/date)  
 3. **Load** the unified data into a PostgreSQL database  
 
 ### 📈 Dashboard Interactions
-- **Search by show title or genre**
+- **Search by movie title**
 - Visualize:
   - Popularity trends (Google search interest over time)
   - IMDb ratings pulled live from OMDb
-  - Seasonal or genre-based interest patterns
+  - Seasonal interest patterns
 
 ### 📊 Visual Views
 Our dashboard will include **at least three visual components**:
 1. **Line Graph** – Viewer interest over time  
-2. **Bar Chart** – IMDb ratings by genre or year  
-3. **Scatter Plot** – Comparison of popularity vs. ratings  
+2. **MetaData** – Movie description  
+3. **Scatter Plot** – Comparison of popularity vs. ratings
+4. The vision for our dashboard will be similar to the following:
+   ![image](https://github.com/user-attachments/assets/f74b628d-ca91-4e2f-b03b-9a2ecc470fa0)
 
 ---
 
