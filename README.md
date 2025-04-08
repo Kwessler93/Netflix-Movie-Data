@@ -5,6 +5,8 @@ The **Netflix/Streaming Trends Analyzer** is an interactive data visualization p
 
 The project is part of the **Data Visualization Track** and focuses on user-driven storytelling through dynamic visuals and filtering.
 
+Group Members: Kimberly Wessler, Chris Dobbin, JaJuan Graham, Cristian Pena, Christine Espiritu
+
 ---
 
 ## 📊 Technologies & Tools  
@@ -52,7 +54,6 @@ Our dashboard will include **at least three visual components**:
 ## 🧠 Key Questions  
 - What shows or genres are trending over time?  
 - Do critically acclaimed shows consistently align with public interest?  
-- Which months or seasons see spikes in genre-based viewership?  
 - What are the long-term popularity arcs of Netflix Originals?
 
 ---
