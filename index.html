@@ -2,92 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Netflix/Streaming Trends Analyzer</title>
-
-  <!-- External Libraries -->
-  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js" defer></script>
-  <script src="netflix-analyzer.js" defer></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f8f9fc;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
-    }
-    header {
-      background-color: #333;
-      color: white;
-      padding: 10px;
       text-align: center;
     }
+
+    h1 {
+      background: #111;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    #search-section {
+      margin: 30px auto;
+    }
+
+    #movie-dropdown {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    #search-btn {
+      margin-left: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+    }
+
     #loading-spinner {
       display: none;
-      text-align: center;
+      margin: 20px auto;
       font-weight: bold;
-      margin-top: 15px;
-      color: #444;
     }
-    #search-section {
-      margin: 20px;
-      text-align: center;
-    }
-    #movie-info {
-      margin: 20px;
-      padding: 10px;
-      background-color: #fff;
-      border-radius: 5px;
-    }
-    #visualizations {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 20px;
-    }
-    #line-graph {
-      width: 90%;
-      height: 400px;
-      background-color: #fff;
+
+    #movie-description {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: left;
+      padding: 20px;
+      background: #ffffff;
       border-radius: 8px;
-      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
-    select {
-      margin: 10px;
-      padding: 5px;
-      font-size: 16px;
+
+    #visualizations {
+      width: 100%;
+      padding: 20px;
+    }
+
+    #visualizations > div {
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      background: #fff;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Netflix/Streaming Trends Analyzer</h1>
-  </header>
+  <h1>Netflix/Streaming Trends Analyzer</h1>
 
-  <!-- Loading Spinner -->
-  <div id="loading-spinner">Loading data, please wait...</div>
-
-  <!-- Movie Selection -->
   <div id="search-section">
-    <h2>Choose a Movie</h2>
     <select id="movie-dropdown">
       <option value="">Select a movie...</option>
     </select>
-    <br />
     <button id="search-btn">Search</button>
   </div>
 
-  <!-- Movie Info Display -->
-  <div id="movie-info">
-    <h3>Movie Information</h3>
-    <p id="movie-description">Movie description will appear here...</p>
-    <p id="movie-rating"></p>
-  </div>
+  <div id="loading-spinner">Loading...</div>
 
-  <!-- Line Graph and Comparison Chart -->
-  <div id="visualizations">
-    <div id="line-graph"></div>
-  </div>
+  <div id="movie-description"></div>
+  <div id="movie-rating"></div>
+
+  <div id="visualizations"></div>
+
+  <script src="netflix-analyzer.js"></script>
 </body>
 </html>
+
+
