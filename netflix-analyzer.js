@@ -1,6 +1,5 @@
-// Updated Netflix Analyzer with movie_trends.json integration
+// Updated Netflix Analyzer with movie_trends.json integration and vote/trend comparison chart (auto-load CSV, no year dropdown, includes loading spinner, loads 'Aftermath' by default)
 
-// Load movie trend data from JSON
 let movieTrendData = {};
 fetch("movie_trends.json")
   .then((response) => response.json())
@@ -10,43 +9,39 @@ fetch("movie_trends.json")
   })
   .catch((err) => console.error("Error loading trend JSON", err));
 
-// Main functionality
-
 const movieDropdown = document.getElementById("movie-dropdown");
-const yearSelect = document.getElementById("year-select");
 const searchButton = document.getElementById("search-btn");
 const movieDescription = document.getElementById("movie-description");
 const movieRating = document.getElementById("movie-rating");
-const csvFileInput = document.getElementById("csv-file");
+const spinner = document.getElementById("loading-spinner");
 
 let csvData = [];
 
-// CSV Upload
-csvFileInput.addEventListener("change", function (event) {
-  const file = event.target.files[0];
+// Show loading spinner
+spinner.style.display = "block";
 
-  if (file) {
-    Papa.parse(file, {
+fetch("cleaned_merged_movies.csv")
+  .then((response) => response.text())
+  .then((csvText) => {
+    Papa.parse(csvText, {
       header: true,
       dynamicTyping: true,
       complete: function (results) {
         csvData = results.data;
-        console.log("Parsed CSV:", csvData.slice(0, 3));
+        console.log("Auto-loaded CSV:", csvData.slice(0, 3));
         populateMovieDropdown();
-        alert("CSV uploaded successfully!");
+        spinner.style.display = "none";
+        autoLoadDefaultMovie("Aftermath");
       },
       error: function (err) {
         console.error("CSV parse error:", err);
+        spinner.style.display = "none";
       },
     });
-  }
-});
+  });
 
-// Populate dropdown
 function populateMovieDropdown() {
-  const years = ["2021", "2022", "2023"];
-  const filtered = csvData.filter((row) => years.includes(String(row.release_year)));
-  const uniqueTitles = [...new Set(filtered.map((row) => row.title).filter(Boolean))];
+  const uniqueTitles = [...new Set(csvData.map((row) => row.title).filter(Boolean))];
 
   movieDropdown.innerHTML = '<option value="">Select a movie...</option>';
   uniqueTitles.forEach((title) => {
@@ -57,32 +52,45 @@ function populateMovieDropdown() {
   });
 }
 
-// Handle Search Click
+function autoLoadDefaultMovie(title) {
+  movieDropdown.value = title;
+  displayMovieInfo(title);
+}
+
 searchButton.addEventListener("click", function () {
   const selectedMovie = movieDropdown.value;
-  const selectedYear = parseInt(yearSelect.value);
+  displayMovieInfo(selectedMovie);
+});
 
+function displayMovieInfo(selectedMovie) {
   if (!selectedMovie) {
     movieDescription.textContent = "Please select a movie.";
     movieRating.textContent = "";
     return;
   }
 
-  const found = csvData.find(
-    (row) => row.title === selectedMovie && row.release_year === selectedYear
-  );
+  const found = csvData.find((row) => row.title === selectedMovie);
 
   if (found) {
-    movieDescription.textContent = `Description: ${found.description || "N/A"}`;
-    movieRating.textContent = `IMDb Rating: ${found.imdb_rating || "N/A"}`;
+    movieDescription.innerHTML = `
+      <strong>Description:</strong> ${found.description || "N/A"}<br/>
+      <strong>Rating:</strong> ${found.rating || "N/A"}<br/>
+      <strong>IMDb Rating:</strong> ${found.imdb_rating || "N/A"}<br/>
+      <strong>IMDb Votes:</strong> ${found.imdb_votes || "N/A"}<br/>
+      <strong>Director:</strong> ${found.director || "N/A"}<br/>
+      <strong>Cast:</strong> ${found.cast || "N/A"}<br/>
+      <strong>Duration:</strong> ${found.duration_minutes || "N/A"} minutes
+    `;
+
+    movieRating.textContent = "";
     plotSearchTrend(selectedMovie);
+    plotTrendVsVotes(selectedMovie, found.imdb_votes);
   } else {
-    movieDescription.textContent = "Movie not found for that year.";
+    movieDescription.textContent = "Movie not found.";
     movieRating.textContent = "";
   }
-});
+}
 
-// Plot trend from JSON
 function plotSearchTrend(movieTitle) {
   const trendArray = movieTrendData[movieTitle];
 
@@ -116,3 +124,45 @@ function plotSearchTrend(movieTitle) {
   });
 }
 
+function plotTrendVsVotes(movieTitle, votes) {
+  const trendArray = movieTrendData[movieTitle];
+  if (!trendArray || !votes) return;
+
+  const dates = trendArray.map((d) => d.date);
+  const trends = trendArray.map((d) => d.trend);
+  const votesArray = new Array(trends.length).fill(votes);
+
+  const trace1 = {
+    x: dates,
+    y: trends,
+    type: "bar",
+    name: "Trend Score",
+  };
+
+  const trace2 = {
+    x: dates,
+    y: votesArray,
+    type: "scatter",
+    mode: "lines",
+    name: "IMDb Votes",
+    yaxis: "y2"
+  };
+
+  const layout = {
+    title: `Trend vs. Votes for ${movieTitle}`,
+    xaxis: { title: "Date" },
+    yaxis: { title: "Trend Score" },
+    yaxis2: {
+      title: "IMDb Votes",
+      overlaying: "y",
+      side: "right"
+    }
+  };
+
+  const vizDiv = document.createElement("div");
+  vizDiv.style.width = "90%";
+  vizDiv.style.height = "400px";
+  vizDiv.style.marginTop = "20px";
+  document.getElementById("visualizations").appendChild(vizDiv);
+  Plotly.newPlot(vizDiv, [trace1, trace2], layout);
+}
