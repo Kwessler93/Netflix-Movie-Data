@@ -2,90 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Netflix/Streaming Trends Analyzer</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fc;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+      background: #f9f9f9;
+      padding: 2rem;
     }
-
-    h1 {
-      background: #111;
-      color: #fff;
-      margin: 0;
-      padding: 20px;
+    .container {
+      max-width: 960px;
+      margin: auto;
     }
-
-    #search-section {
-      margin: 30px auto;
-    }
-
-    #movie-dropdown {
-      width: 300px;
-      padding: 8px;
-      font-size: 16px;
-    }
-
-    #search-btn {
-      margin-left: 10px;
-      padding: 8px 16px;
-      font-size: 16px;
-    }
-
-    #loading-spinner {
-      display: none;
-      margin: 20px auto;
-      font-weight: bold;
-    }
-
-    #movie-description {
-      max-width: 800px;
-      margin: 20px auto;
-      text-align: left;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
     #visualizations {
-      width: 100%;
-      padding: 20px;
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
-
-    #visualizations > div {
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      background: #fff;
+    #line-graph, #bar-graph {
+      flex: 1 1 100%;
+      min-height: 400px;
     }
   </style>
 </head>
 <body>
-  <h1>Netflix/Streaming Trends Analyzer</h1>
-
-  <div id="search-section">
-    <select id="movie-dropdown">
-      <option value="">Select a movie...</option>
-    </select>
+  <div class="container">
+    <h2>Netflix/Streaming Trends Analyzer</h2>
+    <select id="movie-dropdown"></select>
     <button id="search-btn">Search</button>
+
+    <div id="movie-description" style="margin-top:1rem;"></div>
+    <div id="visualizations">
+      <div id="line-graph"></div>
+      <div id="bar-graph"></div>
+    </div>
   </div>
-
-  <div id="loading-spinner">Loading...</div>
-
-  <div id="movie-description"></div>
-  <div id="movie-rating"></div>
-
-  <div id="visualizations"></div>
-
   <script src="netflix-analyzer.js"></script>
 </body>
 </html>
+
+
 
 
