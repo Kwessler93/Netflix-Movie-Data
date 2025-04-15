@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Netflix/Streaming Trends Analyzer</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" />
+  <style>
+    body {
+      background: #f9f9f9;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+    }
+    #visualizations {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    #line-graph, #bar-graph {
+      flex: 1 1 100%;
+      min-height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Netflix/Streaming Trends Analyzer</h2>
+    <select id="movie-dropdown"></select>
+    <button id="search-btn">Search</button>
+
+    <div id="movie-description" style="margin-top:1rem;"></div>
+    <div id="visualizations">
+      <div id="line-graph"></div>
+      <div id="bar-graph"></div>
+    </div>
+  </div>
+  <script src="netflix-analyzer.js"></script>
+</body>
+</html>
+
+
+
+
