@@ -1,5 +1,7 @@
 # Netflix/Streaming Trends Analyzer
 
+Members: Kimberly Wessler, Cristian Pena, Chris Dobbin, Christine Espiritu, JaJuan Graham
+
 ## 📊 Project Overview
 This project explores Netflix and streaming movie trends by combining metadata, IMDb ratings, and Google search interest over time. Our goal was to create an interactive dashboard that allows users to select a movie and view:
 - A description and IMDb metadata
