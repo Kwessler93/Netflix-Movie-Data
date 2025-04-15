@@ -112,4 +112,7 @@ To run the full application locally (backend + frontend):
 
 > 💡 Note: Ensure both the Flask backend and the local server are running simultaneously for full functionality.
 
+## Acknowledgments
+
+- This project was developed with assistance from [ChatGPT](https://openai.com/chatgpt) for guidance on Python scripting, JavaScript debugging, and Markdown formatting.
 
