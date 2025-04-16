@@ -78,7 +78,16 @@ function plotTrendVsVotes(title, votes) {
   fetch(`${API_BASE}/api/trends/${encodeURIComponent(title)}`)
     .then(res => res.json())
     .then(data => {
-      if (!data.length || !votes) return;
+      const barGraphDiv = document.getElementById("bar-graph");
+
+      // Clear the chart if no data or no votes
+      if (!data.length || !votes) {
+        Plotly.purge(barGraphDiv);  // Fully clears any existing chart
+        Plotly.newPlot(barGraphDiv, [], {
+          title: `No trend data for ${title}`,
+        });
+        return;
+      }
 
       const dates = data.map(d => new Date(d.date));
       const trends = data.map(d => d.trend);
@@ -94,7 +103,7 @@ function plotTrendVsVotes(title, votes) {
         yaxis: "y2"
       };
 
-      Plotly.newPlot("bar-graph", [trace1, trace2], {
+      Plotly.newPlot(barGraphDiv, [trace1, trace2], {
         title: `Trend vs IMDb Votes for ${title}`,
         xaxis: { title: "Date", type: "date" },
         yaxis: { title: "Trend Score" },
